@@ -1,0 +1,22 @@
+#!/usr/bin/expect -f
+set timeout -1
+spawn ./main.out
+expect "miniPy>"
+send -- "a=\[1,2,33,444,\"22adD\",5.5\]\n"
+expect "miniPy>"
+send -- "a\n"
+expect "miniPy>"
+send -- "a\[1\]=22+22*34\n"
+expect "miniPy>"
+send -- "a\n"
+expect "miniPy>"
+send -- "a\[1:3\]=\[\[\],3.4\]\n"
+expect "miniPy>"
+send -- "a\n"
+expect "miniPy>"
+send -- "\"123\"+\"abc\"\n"
+expect "miniPy>"
+send -- "range(len(a))*4\n"
+expect "miniPy>"
+send -- "exit()\n"
+
