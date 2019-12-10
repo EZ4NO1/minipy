@@ -8,6 +8,7 @@ varmap::varmap()
 
 void varmap::insert_assign(variable* var1, variable* var2)
 {
+        if(var2==0){var1=0;return;}
 	string key1 = string(*(string*)var1->value);
 	for (int i = 0; i < size; i++) {
 		if (key[i] == key1) {
@@ -31,11 +32,13 @@ variable* varmap::at(variable* var)
 		if (key[i] == key1)
 			return pointer[i];
 	}
+        cout<<"NameError:name \'"<<*(string*)var->value<<"\' is not defined"<<endl;
 	return 0;
 }
 variable* varmap::leftat(variable* var)
 {
 	string key1 = string(*(string*)var->value);
+        if(var==0)return 0;
 	for (int i = 0; i < size; i++) {
 		if (key[i] == key1)
 			return new variable(&pointer[i]);
@@ -47,6 +50,7 @@ variable* varmap::leftat(variable* var)
 bool varmap::exsit(variable* var)
 {
 	string key1 = string(*(string*)var->value);
+        if(var==0)return false;
 	for (int i = 0; i < size; i++) {
 		if (key[i] == key1)
 			return true;
@@ -103,6 +107,7 @@ variable* varmap::func(variable* var1, variable* var2){//参数被打包成了li
 
 variable* varmap::objfunc(variable* var1, variable* var2,variable* var3){
 	string funcname=*(string*)var2->value;
+        if((var1==0)||(var2==0)||(var3==0))return 0;
 	if (var1->type==TYPE_LIST){
 		
 			if (funcname=="append"){
@@ -117,11 +122,27 @@ variable* varmap::objfunc(variable* var1, variable* var2,variable* var3){
 						var1->value=l;
 				}
 			}
-		
+		        else {
+                            cout<<"AttributeError:\'list\' object has no attribute "<<"\'";
+                            cout<<funcname<<"\'"<<endl;
+                        }
 	}
+        if(var1->type==TYPE_INT){
+                            cout<<"AttributeError:\'int\' object has no attribute "<<"\'";
+                            cout<<funcname<<"\'"<<endl;
+                        }
+        if(var1->type==TYPE_FLOAT){
+                            cout<<"AttributeError:\'float\' object has no attribute "<<"\'";
+                            cout<<funcname<<"\'"<<endl;
+                        }
+        if(var1->type==TYPE_STR){
+                            cout<<"AttributeError:\'string\' object has no attribute "<<"\'";
+                            cout<<funcname<<"\'"<<endl;
+                        }
 	return 0;
 }
 void varmap::assign(variable* var1,variable* var2){
+        if((var1==0)||(var2==0))return;
 	if (var1->type==TYPE_LEFT){
 		if ((var2->type==TYPE_INT)||(var2->type==TYPE_FLOAT))
 		*(variable**)(var1->value)=new variable(var2);
@@ -137,6 +158,13 @@ void varmap::assign(variable* var1,variable* var2){
 		}
 		else{}
 	}
+        else if(var1->type==TYPE_LEFTSTR){
+              if(var2->type==TYPE_STR){
+                        for(int i=0;i<var1->size;i++)
+                               ((char**)var1->value)[i][0]=(*(string*)var2->value)[i];
+              }
+              else{}
+        }
 }
 varmap::~varmap()
 {

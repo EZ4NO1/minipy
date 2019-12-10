@@ -10,6 +10,8 @@
 #define TYPE_NONE 5
 #define TYPE_LEFT 6
 #define TYPE_LEFTLIST 7
+#define TYPE_LEFTSTR 8
+#define SLEN 100
 using namespace std;
 class variable {
 public:
@@ -27,6 +29,7 @@ public:
 	variable(variable*,bool=true);
 	variable(variable**);//left-type ONLY
 	variable(variable***,int);//left-list-type ONLY
+        variable(char*[SLEN],int );
 	void print(bool b = true);
 	~variable();
 	static void deleteannoy(variable*);

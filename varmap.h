@@ -2,6 +2,7 @@
 #define VARMAP_H
 #include "variable.h"
 #define VARMAP_MAX_LENGTH 99
+
 extern string type_str[8];
 
 

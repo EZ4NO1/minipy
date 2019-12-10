@@ -55,7 +55,6 @@ factor : '+' factor{
 		$$=variable::posop($2);
 }
        | '-' factor{
-cout<<"-"<<endl;
 	   	//add method op_neg
 		$$=variable::negop($2);
 	   }
@@ -70,11 +69,11 @@ atom  : ID  {$$=varm.at($1);}
       ;
 
 
-slice_op :  /*  empty production */{$$=new variable(1);cout<<"slice_op empty"<<endl;}
-		|':'{$$=new variable(1);cout<<"slice_op :"<<endl;}
+slice_op :  /*  empty production */{$$=new variable(1);}
+		|':'{$$=new variable(1);}
         | ':' add_expr {$$=$2;}
         ;
-sub_expr:  /*  empty production */{$$=new variable(); cout<<"sub_exper default"<<endl;}
+sub_expr:  /*  empty production */{$$=new variable();}
         | add_expr{$$=$1;}
         ;        
 atom_expr : atom  {$$=$1;}
@@ -146,7 +145,7 @@ add_expr : add_expr '+' mul_expr  {//Ìí¼Óadd
 		  }
         ;
 mul_expr : mul_expr '*' factor{ //add method mul
-$$=variable::mul($1,$3);
+           $$=variable::mul($1,$3);
 		}
         |  mul_expr '/' factor{//add method div
 			$$=variable::div($1,$3);
